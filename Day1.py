@@ -28,3 +28,49 @@ In this example, the calibration values of these four lines are 12, 38, 15, and 
 
 Consider your entire calibration document. What is the sum of all of the calibration values?
 '''
+
+
+import sys
+
+
+def main():
+    words = read_puzzle()
+    numbers = find_numbers(words)
+    print(numbers)  # Print the list of first and last digits
+
+
+def read_puzzle():
+    words = []
+    with open('day1_puzzle_input.txt', 'r') as file:
+        for line in file:
+            words.append(line.strip())
+    return words
+
+
+def find_numbers(words):
+    numbers = []
+    for word in words:
+        number1 = find_first_digit(word)
+        number2 = find_last_digit(word)
+        if number1 is not None and number2 is not None:
+            sum_of_two = int(number1) + int(number2)
+            numbers.append(sum_of_two)
+    return numbers
+
+def find_first_digit(word):
+    for char in word:
+        if char.isdigit():
+            return char
+    return None        
+            
+                
+def find_last_digit(word):
+    for char in reversed(word):
+        if char.isdigit():
+            return char
+    return None
+
+
+
+if __name__ == "__main__":
+    main()
