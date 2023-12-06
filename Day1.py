@@ -36,7 +36,8 @@ import sys
 def main():
     words = read_puzzle()
     numbers = find_numbers(words)
-    print(numbers)  # Print the list of first and last digits
+    sum = sum_of_all_numbers(numbers)
+    print(sum)  # Print the list of first and last digits
 
 
 def read_puzzle():
@@ -53,8 +54,8 @@ def find_numbers(words):
         number1 = find_first_digit(word)
         number2 = find_last_digit(word)
         if number1 is not None and number2 is not None:
-            sum_of_two = int(number1) + int(number2)
-            numbers.append(sum_of_two)
+            sum_of_two = str(number1) + str(number2)
+            numbers.append(int(sum_of_two))
     return numbers
 
 def find_first_digit(word):
@@ -69,6 +70,15 @@ def find_last_digit(word):
         if char.isdigit():
             return char
     return None
+
+def sum_of_all_numbers(numbers):
+    sum_of_numbers = 0
+    for number in numbers:
+        sum_of_numbers = sum_of_numbers + number
+    return sum_of_numbers
+    
+
+
 
 
 
