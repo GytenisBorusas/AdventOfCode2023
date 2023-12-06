@@ -23,9 +23,11 @@ import sys
 def main():
     words = read_puzzle()
     converted_words = replace_words_to_digs(words)
+    print(converted_words)
     numbers = find_numbers(converted_words)
+    print(numbers)
     sum = sum_of_all_numbers(numbers)
-    print(sum)  # Print the list of first and last digits
+    print (f"Final sum {sum}")
 
 
 def read_puzzle():
@@ -36,7 +38,7 @@ def read_puzzle():
     return words
 
 def replace_words_to_digs(words):
-    number_dic = ["one": "1",
+    number_dic = {"one": "1",
                   "two": "2",
                   "three": "3",
                   "four": "4",
@@ -44,15 +46,20 @@ def replace_words_to_digs(words):
                   "six": "6",
                   "seven": "7",
                   "eight": "8",
-                  "nine": "9"
-                  ]
-
+                  "nine": "9"}
+    
+    for i in range(len(words)):
+        for word, digit in number_dic.items():
+            words[i] = words[i].replace(word, digit)
+    return words
+    
 
 def find_numbers(converted_words):
     numbers = []
     for word in converted_words:
-        number1 = find_first_digit(word)
-        number2 = find_last_digit(word)
+        number1 = find_first_digit(str(word))
+        number2 = find_last_digit(str(word))
+        print(f"Original: {word}, First Digit: {number1}, Last Digit: {number2}")  # Debug print
         if number1 is not None and number2 is not None:
             sum_of_two = str(number1) + str(number2)
             numbers.append(int(sum_of_two))

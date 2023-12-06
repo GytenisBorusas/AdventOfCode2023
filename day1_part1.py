@@ -36,6 +36,7 @@ import sys
 def main():
     words = read_puzzle()
     numbers = find_numbers(words)
+    print(numbers)
     sum = sum_of_all_numbers(numbers)
     print(sum)  # Print the list of first and last digits
 
