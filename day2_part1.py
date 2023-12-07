@@ -39,18 +39,80 @@ import sys
 
 
 def main():
-    words = read_puzzle()
-
-    print(words)  # Print the list of first and last digits
+    game_list = read_puzzle()
+    games_separated = separate_games(game_list)
+    valid_games = valid_game_or_not(games_separated)
+    print(valid_games)
+    count_sum = add_valid_games(valid_games)
+    
+    print(count_sum)  # Print the list of first and last digits
 
 def read_puzzle():
     words = []
-    with open('day2_puzzle_input.txt', 'r') as file:
+    with open('day2_puzzle_input_easy.txt', 'r') as file:
         for line in file:
-            words.append(line.strip())
+            words.append(line)
     return words
 
+def separate_games(game_list):
+    game_dict = {}
 
+    for game in game_list:
+        # Splitting the string to separate the game number and the color counts
+        parts = game.split(': ')
+        game_number = parts[0].split(' ')[1]  # Extracting the game number
+        color_counts = parts[1].split('; ')  # Splitting the color counts
+
+        # Removing potential newline characters and adding to the dictionary
+        game_dict[game_number] = [s.strip() for s in color_counts]
+
+    # Printing the dictionary for troubleshooting
+    # for key, value in game_dict.items():
+    #     print(f"'{key}': {value}")
+    
+    return game_dict
+    
+def valid_game_or_not(games_separated):
+    red_cubes = 14
+    green_cubes = 13
+    blue_cubes = 14
+    valid_games = {}
+    
+    for key, rounds in games_separated.items():
+        red_count = 0
+        green_count = 0
+        blue_count = 0
+        
+         # Iterate through each round in the game
+        for round in rounds:
+            # Split the round into color-count pairs and count them
+            color_counts = round.split(', ')
+            for color_count in color_counts:
+                count, color = color_count.split()
+                count = int(count)
+                if color == 'red':
+                    red_count += count
+                elif color == 'green':
+                    green_count += count
+                elif color == 'blue':
+                    blue_count += count
+
+        # Check if the game is valid
+        if red_count < red_cubes and green_count < green_cubes and blue_count < blue_cubes:
+            # Mark the game as invalid
+            valid_games[key] = rounds
+
+    return valid_games
+    
+
+def add_valid_games(valid_games):
+
+    valid_game_sum = 0
+    
+    for key in valid_games:
+        valid_game_sum = valid_game_sum + int(key)
+        
+    return valid_game_sum
 
 if __name__ == "__main__":
     main()
