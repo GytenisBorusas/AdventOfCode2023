@@ -42,14 +42,14 @@ def main():
     game_list = read_puzzle()
     games_separated = separate_games(game_list)
     valid_games = valid_game_or_not(games_separated)
-    print(valid_games)
+    #print(valid_games)
     count_sum = add_valid_games(valid_games)
     
-    print(count_sum)  # Print the list of first and last digits
+    print(f"Total sum: {count_sum}")  # Print the list of first and last digits
 
 def read_puzzle():
     words = []
-    with open('day2_puzzle_input_easy.txt', 'r') as file:
+    with open('day2_puzzle_input.txt', 'r') as file:
         for line in file:
             words.append(line)
     return words
@@ -79,12 +79,12 @@ def valid_game_or_not(games_separated):
     valid_games = {}
     
     for key, rounds in games_separated.items():
-        red_count = 0
-        green_count = 0
-        blue_count = 0
-        
-         # Iterate through each round in the game
+        game_is_valid = True  # Assume the game is valid initially
+
+        # Iterate through each round in the game
         for round in rounds:
+            red_count = green_count = blue_count = 0  # Reset counts for each round
+
             # Split the round into color-count pairs and count them
             color_counts = round.split(', ')
             for color_count in color_counts:
@@ -97,10 +97,13 @@ def valid_game_or_not(games_separated):
                 elif color == 'blue':
                     blue_count += count
 
-        # Check if the game is valid
-        if red_count < red_cubes and green_count < green_cubes and blue_count < blue_cubes:
-            # Mark the game as invalid
-            valid_games[key] = rounds
+            # Check if the round is valid
+            if red_count > red_cubes or green_count > green_cubes or blue_count > blue_cubes:
+                game_is_valid = False  # Mark the game as invalid
+                break  # No need to check further rounds if one is invalid
+
+        if game_is_valid:
+            valid_games[key] = rounds  # Add only valid games to the dictionary
 
     return valid_games
     
@@ -110,7 +113,12 @@ def add_valid_games(valid_games):
     valid_game_sum = 0
     
     for key in valid_games:
+        print(key)
+        
         valid_game_sum = valid_game_sum + int(key)
+    
+    for key, value in valid_games.items():
+            print(f"'{key}': {value}")  
         
     return valid_game_sum
 
