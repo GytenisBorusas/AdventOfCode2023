@@ -73,7 +73,7 @@ def separate_games(game_list):
     return game_dict
     
 def valid_game_or_not(games_separated):
-    red_cubes = 14
+    red_cubes = 12
     green_cubes = 13
     blue_cubes = 14
     valid_games = {}
@@ -81,16 +81,17 @@ def valid_game_or_not(games_separated):
     for key, rounds in games_separated.items():
         game_is_valid = True  # Assume the game is valid initially
 
-        # Iterate through each round in the game
         for round in rounds:
             red_count = green_count = blue_count = 0  # Reset counts for each round
 
-            # Split the round into color-count pairs and count them
+            # Split the round into individual color counts
             color_counts = round.split(', ')
+
             for color_count in color_counts:
-                count, color = color_coun
-                t.split()
-                count = int(count)
+                parts = color_count.split()  # Split the string into count and color
+                count = int(parts[0])  # Convert the count to an integer
+                color = parts[1]  # Assign the color
+
                 if color == 'red':
                     red_count += count
                 elif color == 'green':
@@ -107,8 +108,9 @@ def valid_game_or_not(games_separated):
             valid_games[key] = rounds  # Add only valid games to the dictionary
 
     return valid_games
+
     
-# checks game validity
+
 def add_valid_games(valid_games):
 
     valid_game_sum = 0
