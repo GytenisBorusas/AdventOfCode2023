@@ -88,7 +88,8 @@ def valid_game_or_not(games_separated):
             # Split the round into color-count pairs and count them
             color_counts = round.split(', ')
             for color_count in color_counts:
-                count, color = color_count.split()
+                count, color = color_coun
+                t.split()
                 count = int(count)
                 if color == 'red':
                     red_count += count
@@ -107,7 +108,7 @@ def valid_game_or_not(games_separated):
 
     return valid_games
     
-
+# checks game validity
 def add_valid_games(valid_games):
 
     valid_game_sum = 0
